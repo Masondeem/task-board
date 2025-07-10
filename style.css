@@ -18,7 +18,7 @@ h1 {
   font-size: 1.5rem;
 }
 
-/* === Board Structure === */
+/* === Board Layout === */
 .board {
   display: flex;
   justify-content: space-around;
@@ -46,7 +46,7 @@ h1 {
   text-align: center;
 }
 
-/* === Task List and Cards === */
+/* === Task Lists and Cards === */
 .task-list {
   flex: 1;
   padding: 0.5rem;
@@ -63,7 +63,7 @@ h1 {
   white-space: normal;
 }
 
-/* Highlight editable focus */
+/* === Task Editing Focus === */
 .task-card[contenteditable="true"]:focus {
   outline: 1px dashed #888;
   background-color: #3a3a3a;
@@ -88,7 +88,7 @@ h1 {
   background-color: #444;
 }
 
-/* === Modal === */
+/* === Modal Styling === */
 .modal {
   position: fixed;
   top: 0; left: 0;
@@ -157,10 +157,12 @@ h1 {
   background-color: #ff4b4b;
   color: white;
 }
+
 .label-work {
   background-color: #1e88e5;
   color: white;
 }
+
 .label-personal {
   background-color: #43a047;
   color: white;
