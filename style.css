@@ -63,8 +63,8 @@ h1 {
   white-space: normal;
 }
 
-/* === Task Editing Focus === */
-.task-card[contenteditable="true"]:focus {
+/* === Inline Editable Elements === */
+.task-card [contenteditable="true"] {
   outline: 1px dashed #888;
   background-color: #3a3a3a;
 }
