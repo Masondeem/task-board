@@ -167,3 +167,28 @@ h1 {
   background-color: #43a047;
   color: white;
 }
+
+.trash-drop-zone {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 100px;
+  height: 100px;
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 2px dashed #666;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 35px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: background-color 0.2s, opacity 0.2s;
+  z-index: 20;
+}
+
+.trash-drop-zone:hover {
+  background-color: #ff4b4b;
+  border-color: #ff4b4b;
+  color: #fff;
+  opacity: 1;
+}
