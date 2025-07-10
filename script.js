@@ -1,15 +1,24 @@
 const columns = ['todo', 'inprogress', 'done'];
 
-// === Initialize SortableJS on each column ===
-columns.forEach(id => {
-  new Sortable(document.getElementById(id), {
-    group: 'shared',
-    animation: 150,
-    onSort: saveBoard
-  });
-});
+// === Wait for DOM ===
+window.onload = () => {
+  initializeSortables();
+  loadBoard();
+};
 
-// === Modal and Task Creation ===
+// === Sortable Initialization ===
+function initializeSortables() {
+  columns.forEach(id => {
+    const el = document.getElementById(id);
+    new Sortable(el, {
+      group: 'shared',
+      animation: 150,
+      onEnd: saveBoard
+    });
+  });
+}
+
+// === Modal Controls ===
 const modal = document.getElementById("taskModal");
 const openBtn = document.getElementById("openTaskForm");
 const cancelBtn = document.getElementById("cancelTask");
@@ -30,32 +39,22 @@ createBtn.onclick = () => {
   if (!title) return;
 
   const card = buildTaskCard(title, desc, label);
-  const list = document.getElementById(column);
-  list.appendChild(card);
+  document.getElementById(column).appendChild(card);
 
   modal.classList.add("hidden");
   clearForm();
   saveBoard();
 };
 
-// === Clear the Form After Submission ===
-function clearForm() {
-  document.getElementById("taskTitle").value = '';
-  document.getElementById("taskDesc").value = '';
-  document.getElementById("taskLabel").value = '';
-  document.getElementById("taskColumn").value = 'todo';
-}
-
-// === Create a Task Card Element ===
+// === Card Builder ===
 function buildTaskCard(title, desc, label) {
   const card = document.createElement("div");
   card.className = "task-card";
   card.setAttribute("contenteditable", "true");
 
-  let labelHTML = "";
-  if (label) {
-    labelHTML = `<div class="task-label label-${label}">${label}</div>`;
-  }
+  const labelHTML = label
+    ? `<div class="task-label label-${label}">${label}</div>`
+    : "";
 
   card.innerHTML = `
     ${labelHTML}
@@ -63,12 +62,11 @@ function buildTaskCard(title, desc, label) {
     <small>${desc}</small>
   `;
 
-  // Update on edit
   card.addEventListener('blur', saveBoard);
   return card;
 }
 
-// === Save Task Board State to localStorage ===
+// === Save Tasks to localStorage ===
 function saveBoard() {
   const boardData = {};
   columns.forEach(col => {
@@ -85,7 +83,7 @@ function saveBoard() {
   localStorage.setItem('taskBoard', JSON.stringify(boardData));
 }
 
-// === Load Tasks From Storage When Page Loads ===
+// === Load Tasks from localStorage ===
 function loadBoard() {
   const saved = localStorage.getItem('taskBoard');
   if (!saved) return;
@@ -100,5 +98,3 @@ function loadBoard() {
     });
   });
 }
-
-window.onload = loadBoard;
