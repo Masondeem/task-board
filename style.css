@@ -1,3 +1,4 @@
+/* === Base Layout === */
 body {
   margin: 0;
   font-family: sans-serif;
@@ -12,6 +13,12 @@ header {
   border-bottom: 1px solid #333;
 }
 
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* === Board Structure === */
 .board {
   display: flex;
   justify-content: space-around;
@@ -26,6 +33,7 @@ header {
   display: flex;
   flex-direction: column;
   max-height: 80vh;
+  box-shadow: 0 0 4px #000;
 }
 
 .column-header {
@@ -35,8 +43,10 @@ header {
   background-color: #2a2a2a;
   border-bottom: 1px solid #444;
   cursor: text;
+  text-align: center;
 }
 
+/* === Task List and Cards === */
 .task-list {
   flex: 1;
   padding: 0.5rem;
@@ -50,9 +60,16 @@ header {
   border-radius: 5px;
   border: 1px solid #444;
   cursor: grab;
+  white-space: normal;
 }
 
-/* Task Form & Modal */
+/* Highlight editable focus */
+.task-card[contenteditable="true"]:focus {
+  outline: 1px dashed #888;
+  background-color: #3a3a3a;
+}
+
+/* === Add Task Button === */
 .add-task-container {
   text-align: center;
   margin-top: 1rem;
@@ -67,6 +84,11 @@ header {
   cursor: pointer;
 }
 
+.add-task-container button:hover {
+  background-color: #444;
+}
+
+/* === Modal === */
 .modal {
   position: fixed;
   top: 0; left: 0;
@@ -84,6 +106,7 @@ header {
   border-radius: 10px;
   width: 300px;
   color: #fff;
+  box-shadow: 0 0 8px #000;
 }
 
 .modal-content input,
@@ -96,6 +119,7 @@ header {
   border: 1px solid #444;
   color: white;
   border-radius: 5px;
+  margin-bottom: 0.75rem;
 }
 
 .modal-content button {
@@ -109,6 +133,35 @@ header {
   cursor: pointer;
 }
 
+.modal-content button:hover {
+  background-color: #555;
+}
+
 .hidden {
   display: none;
+}
+
+/* === Label Styles === */
+.task-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.label-urgent {
+  background-color: #ff4b4b;
+  color: white;
+}
+.label-work {
+  background-color: #1e88e5;
+  color: white;
+}
+.label-personal {
+  background-color: #43a047;
+  color: white;
 }
