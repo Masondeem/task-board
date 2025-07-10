@@ -63,7 +63,7 @@ h1 {
   white-space: normal;
 }
 
-/* === Inline Editable Elements === */
+/* === Inline Editable Styling === */
 .task-card [contenteditable="true"] {
   outline: 1px dashed #888;
   background-color: #3a3a3a;
@@ -168,6 +168,7 @@ h1 {
   color: white;
 }
 
+/* === Trash Drop Zone === */
 .trash-drop-zone {
   position: fixed;
   bottom: 20px;
