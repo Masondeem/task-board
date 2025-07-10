@@ -15,6 +15,7 @@ function initializeSortables() {
   });
 }
 
+// === Modal Logic ===
 const modal = document.getElementById("taskModal");
 document.getElementById("openTaskForm").onclick = () => modal.classList.remove("hidden");
 document.getElementById("cancelTask").onclick = () => {
@@ -45,6 +46,7 @@ function clearForm() {
   document.getElementById("taskColumn").value = 'todo';
 }
 
+// === Build Task Card with Double-Click Editing ===
 function buildTaskCard(title, desc, label) {
   const card = document.createElement("div");
   card.className = "task-card";
@@ -56,17 +58,40 @@ function buildTaskCard(title, desc, label) {
   card.innerHTML = `
     ${labelEl}
     <div class="task-content">
-      <strong class="task-title" ondblclick="this.contentEditable='true'">${title}</strong><br>
-      <small class="task-desc" ondblclick="this.contentEditable='true'">${desc}</small>
+      <strong class="task-title">${title}</strong><br>
+      <small class="task-desc">${desc}</small>
     </div>
   `;
 
-  // Save content on blur (editing done)
-  card.addEventListener('blur', saveBoard, true);
+  const titleEl = card.querySelector(".task-title");
+  const descEl = card.querySelector(".task-desc");
+
+  // Enable editing on double-click
+  titleEl.addEventListener("dblclick", () => {
+    titleEl.contentEditable = "true";
+    titleEl.focus();
+  });
+
+  descEl.addEventListener("dblclick", () => {
+    descEl.contentEditable = "true";
+    descEl.focus();
+  });
+
+  // Save on blur
+  titleEl.addEventListener("blur", () => {
+    titleEl.contentEditable = "false";
+    saveBoard();
+  });
+
+  descEl.addEventListener("blur", () => {
+    descEl.contentEditable = "false";
+    saveBoard();
+  });
 
   return card;
 }
 
+// === Save to localStorage ===
 function saveBoard() {
   const boardData = {};
   columns.forEach(col => {
@@ -83,6 +108,7 @@ function saveBoard() {
   localStorage.setItem('taskBoard', JSON.stringify(boardData));
 }
 
+// === Load from localStorage ===
 function loadBoard() {
   const saved = localStorage.getItem('taskBoard');
   if (!saved) return;
