@@ -6,12 +6,23 @@ window.onload = () => {
 const columns = ['todo', 'inprogress', 'done'];
 
 function initializeSortables() {
+  // Enable drag-and-drop on each column
   columns.forEach(id => {
     new Sortable(document.getElementById(id), {
       group: 'shared',
       animation: 150,
       onEnd: saveBoard
     });
+  });
+
+  // Enable drop on Trash
+  new Sortable(document.getElementById("trash"), {
+    group: 'shared',
+    animation: 150,
+    onAdd: function (evt) {
+      evt.item.remove();
+      saveBoard();
+    }
   });
 }
 
