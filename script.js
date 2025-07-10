@@ -7,8 +7,7 @@ const columns = ['todo', 'inprogress', 'done'];
 
 function initializeSortables() {
   columns.forEach(id => {
-    const el = document.getElementById(id);
-    new Sortable(el, {
+    new Sortable(document.getElementById(id), {
       group: 'shared',
       animation: 150,
       onEnd: saveBoard
@@ -16,13 +15,13 @@ function initializeSortables() {
   });
 }
 
-// === Modal Setup ===
 const modal = document.getElementById("taskModal");
 document.getElementById("openTaskForm").onclick = () => modal.classList.remove("hidden");
 document.getElementById("cancelTask").onclick = () => {
   modal.classList.add("hidden");
   clearForm();
 };
+
 document.getElementById("createTask").onclick = () => {
   const title = document.getElementById("taskTitle").value.trim();
   const desc = document.getElementById("taskDesc").value.trim();
@@ -46,49 +45,28 @@ function clearForm() {
   document.getElementById("taskColumn").value = 'todo';
 }
 
-// === Build Task Card (with double-click editing) ===
 function buildTaskCard(title, desc, label) {
   const card = document.createElement("div");
   card.className = "task-card";
 
-  const labelHTML = label
+  const labelEl = label
     ? `<div class="task-label label-${label}">${label}</div>`
     : "";
 
   card.innerHTML = `
-    ${labelHTML}
+    ${labelEl}
     <div class="task-content">
-      <strong class="task-title">${title}</strong><br>
-      <small class="task-desc">${desc}</small>
+      <strong class="task-title" ondblclick="this.contentEditable='true'">${title}</strong><br>
+      <small class="task-desc" ondblclick="this.contentEditable='true'">${desc}</small>
     </div>
   `;
 
-  // Double-click to make editable
-  card.addEventListener("dblclick", () => {
-    const titleEl = card.querySelector(".task-title");
-    const descEl = card.querySelector(".task-desc");
-
-    titleEl.setAttribute("contenteditable", "true");
-    descEl.setAttribute("contenteditable", "true");
-    titleEl.focus();
-  });
-
-  // Save edits when focus is lost
-  card.addEventListener("focusout", () => {
-    const titleEl = card.querySelector(".task-title");
-    const descEl = card.querySelector(".task-desc");
-
-    if (titleEl.hasAttribute("contenteditable")) {
-      titleEl.removeAttribute("contenteditable");
-      descEl.removeAttribute("contenteditable");
-      saveBoard();
-    }
-  });
+  // Save content on blur (editing done)
+  card.addEventListener('blur', saveBoard, true);
 
   return card;
 }
 
-// === Save State to localStorage ===
 function saveBoard() {
   const boardData = {};
   columns.forEach(col => {
@@ -105,7 +83,6 @@ function saveBoard() {
   localStorage.setItem('taskBoard', JSON.stringify(boardData));
 }
 
-// === Load Tasks from localStorage ===
 function loadBoard() {
   const saved = localStorage.getItem('taskBoard');
   if (!saved) return;
