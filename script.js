@@ -1,6 +1,6 @@
 const columns = ['todo', 'inprogress', 'done'];
 
-// === Drag & Drop Initialization ===
+// === Initialize SortableJS on each column ===
 columns.forEach(id => {
   new Sortable(document.getElementById(id), {
     group: 'shared',
@@ -9,7 +9,7 @@ columns.forEach(id => {
   });
 });
 
-// === Modal Behavior ===
+// === Modal and Task Creation ===
 const modal = document.getElementById("taskModal");
 const openBtn = document.getElementById("openTaskForm");
 const cancelBtn = document.getElementById("cancelTask");
@@ -30,13 +30,15 @@ createBtn.onclick = () => {
   if (!title) return;
 
   const card = buildTaskCard(title, desc, label);
-  document.getElementById(column).appendChild(card);
+  const list = document.getElementById(column);
+  list.appendChild(card);
 
   modal.classList.add("hidden");
   clearForm();
   saveBoard();
 };
 
+// === Clear the Form After Submission ===
 function clearForm() {
   document.getElementById("taskTitle").value = '';
   document.getElementById("taskDesc").value = '';
@@ -44,7 +46,7 @@ function clearForm() {
   document.getElementById("taskColumn").value = 'todo';
 }
 
-// === Build Task Card Element ===
+// === Create a Task Card Element ===
 function buildTaskCard(title, desc, label) {
   const card = document.createElement("div");
   card.className = "task-card";
@@ -61,11 +63,12 @@ function buildTaskCard(title, desc, label) {
     <small>${desc}</small>
   `;
 
+  // Update on edit
   card.addEventListener('blur', saveBoard);
   return card;
 }
 
-// === Save Board to localStorage ===
+// === Save Task Board State to localStorage ===
 function saveBoard() {
   const boardData = {};
   columns.forEach(col => {
@@ -82,7 +85,7 @@ function saveBoard() {
   localStorage.setItem('taskBoard', JSON.stringify(boardData));
 }
 
-// === Load Board from localStorage ===
+// === Load Tasks From Storage When Page Loads ===
 function loadBoard() {
   const saved = localStorage.getItem('taskBoard');
   if (!saved) return;
@@ -90,7 +93,7 @@ function loadBoard() {
   const boardData = JSON.parse(saved);
   columns.forEach(col => {
     const columnEl = document.getElementById(col);
-    columnEl.innerHTML = ''; // Clear existing
+    columnEl.innerHTML = '';
     boardData[col].forEach(task => {
       const card = buildTaskCard(task.title, task.desc, task.label);
       columnEl.appendChild(card);
