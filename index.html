@@ -11,30 +11,56 @@
   <header>
     <h1>My Task Board</h1>
   </header>
+
+  <!-- Add Task Button -->
+  <div class="add-task-container">
+    <button id="openTaskForm">➕ Add Task</button>
+  </div>
+
+  <!-- Task Form Modal -->
+  <div id="taskModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>New Task</h2>
+      <label>Title:<br><input type="text" id="taskTitle" /></label><br>
+      <label>Description:<br><textarea id="taskDesc"></textarea></label><br>
+      <label>Column:<br>
+        <select id="taskColumn">
+          <option value="todo">To Do</option>
+          <option value="inprogress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </label><br><br>
+      <button id="createTask">Create Task</button>
+      <button id="cancelTask">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Main Board -->
   <main>
     <div class="board">
       <div class="column" data-name="To Do">
         <div class="column-header" contenteditable="true">To Do</div>
         <div class="task-list" id="todo">
-          <div class="task-card">Sample Task A</div>
+          <div class="task-card"><strong>Sample Task A</strong><br><small>This is a sample description.</small></div>
         </div>
       </div>
 
       <div class="column" data-name="In Progress">
         <div class="column-header" contenteditable="true">In Progress</div>
         <div class="task-list" id="inprogress">
-          <div class="task-card">Sample Task B</div>
+          <div class="task-card"><strong>Sample Task B</strong><br><small>Currently being worked on.</small></div>
         </div>
       </div>
 
       <div class="column" data-name="Done">
         <div class="column-header" contenteditable="true">Done</div>
         <div class="task-list" id="done">
-          <div class="task-card">Sample Task C</div>
+          <div class="task-card"><strong>Sample Task C</strong><br><small>Task completed.</small></div>
         </div>
       </div>
     </div>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
