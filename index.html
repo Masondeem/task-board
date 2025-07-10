@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Board</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>My Task Board</h1>
+  </header>
+  <main>
+    <div class="board">
+      <div class="column" data-name="To Do">
+        <div class="column-header" contenteditable="true">To Do</div>
+        <div class="task-list" id="todo">
+          <div class="task-card">Sample Task A</div>
+        </div>
+      </div>
+
+      <div class="column" data-name="In Progress">
+        <div class="column-header" contenteditable="true">In Progress</div>
+        <div class="task-list" id="inprogress">
+          <div class="task-card">Sample Task B</div>
+        </div>
+      </div>
+
+      <div class="column" data-name="Done">
+        <div class="column-header" contenteditable="true">Done</div>
+        <div class="task-list" id="done">
+          <div class="task-card">Sample Task C</div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
